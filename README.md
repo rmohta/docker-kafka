@@ -1,6 +1,11 @@
 Kafka in Docker
 ===
 
+-----
+Forked and upgraded version of https://github.com/spotify/docker-kafka
+
+-----
+
 This repository provides everything you need to run Kafka in Docker.
 
 For convenience also contains a packaged proxy that can be used to get data from
@@ -19,17 +24,17 @@ Run
 ---
 
 ```bash
-docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST=`docker-machine ip \`docker-machine active\`` --env ADVERTISED_PORT=9092 spotify/kafka
+docker run -p 2181:2181 -p 9092:9092 --env KAFKA_LISTENERS="PLAINTEXT://:9092" rmohta/docker-kafka:latest
 ```
 
 ```bash
-export KAFKA=`docker-machine ip \`docker-machine active\``:9092
+export KAFKA=localhost:9092
 kafka-console-producer.sh --broker-list $KAFKA --topic test
 ```
 
 ```bash
-export ZOOKEEPER=`docker-machine ip \`docker-machine active\``:2181
-kafka-console-consumer.sh --zookeeper $ZOOKEEPER --topic test
+export KAFKA=localhost:9092
+kafka-console-consumer.sh --broker-list $KAFKA --topic test
 ```
 
 Running the proxy
@@ -67,9 +72,8 @@ In the box
 Public Builds
 ---
 
-https://registry.hub.docker.com/u/spotify/kafka/
+https://hub.docker.com/repository/docker/rmohta/docker-kafka
 
-https://registry.hub.docker.com/u/spotify/kafkaproxy/
 
 Build from Source
 ---
